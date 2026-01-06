@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-10">
             @if(session('success'))
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                     {{ session('success') }}
@@ -11,18 +11,15 @@
                 </div>
             @endif
             
-            <div class="form-group mb-2 d-flex justify-content-between">
-                <a href="{{url('master-items/form/new')}}" class="btn btn-secondary">+ Master Items Baru</a>
-                <a href="{{url('master-items/export-excel')}}" class="btn btn-success">
-                    <i class="bi bi-file-excel"></i> Download Excel
-                </a>
+            <div class="form-group mb-2">
+                <a href="{{url('kategori/form/new')}}" class="btn btn-secondary">+ Kategori Baru</a>
             </div>
             <div class="card">
-                <div class="card-header">Daftar Master Items</div>
+                <div class="card-header">Daftar Kategori Items</div>
 
                 <div class="card-body">
-                    @include('master_items.index.filter')
-                    @include('master_items.index.table')
+                    @include('kategori.index.filter')
+                    @include('kategori.index.table')
                 </div>
             </div>
         </div>
@@ -30,5 +27,6 @@
 </div>
 @endsection
 @section('js')
-@include('master_items.index.js')
+@include('kategori.index.js')
 @endsection
+

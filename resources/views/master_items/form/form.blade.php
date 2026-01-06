@@ -1,4 +1,4 @@
-<form method="POST">
+<form method="POST" enctype="multipart/form-data">
     @csrf
     @if($method == 'edit')
     <div class="form-group">
@@ -10,6 +10,17 @@
     <div class="form-group">
         <label>Nama</label>
         <input type="text" class="form-control" name="nama" required  value="{{$item->nama ?? ''}}">
+    </div>
+
+    <div class="form-group">
+        <label>Foto Produk</label>
+        @if($method == 'edit' && isset($item->foto) && $item->foto)
+        <div class="mb-2">
+            <img src="{{asset('uploads/items/' . $item->foto)}}" alt="Foto" style="max-width: 200px; max-height: 200px;" class="img-thumbnail">
+        </div>
+        @endif
+        <input type="file" class="form-control" name="foto" accept="image/*">
+        <small class="form-text text-muted">Format: JPG, JPEG, PNG, GIF. Max 2MB</small>
     </div>
 
     <div class="form-group">
@@ -43,9 +54,36 @@
             <option @if($selected == 'Obat') selected @endif>Obat</option>
             <option @if($selected == 'Alkes') selected @endif>Alkes</option>
             <option @if($selected == 'Matkes') selected @endif>Matkes</option>
-            <optio @if($selected == 'Umum') selected @endif>Umum</option>
-            <optio @if($selected == 'ATK') selected @endif>ATK</option>
+            <option @if($selected == 'Umum') selected @endif>Umum</option>
+            <option @if($selected == 'ATK') selected @endif>ATK</option>
         </select>
+    </div>
+
+    <div class="form-group">
+        <label>Kategori</label>
+        <div class="border p-3 rounded">
+            @if(isset($kategoris) && $kategoris->count() > 0)
+                @php
+                    $selected_kategoris = [];
+                    if(isset($item->kategoris)) {
+                        $selected_kategoris = $item->kategoris->pluck('id')->toArray();
+                    }
+                @endphp
+                @foreach($kategoris as $kategori)
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="kategoris[]" value="{{$kategori->id}}" 
+                        id="kategori{{$kategori->id}}"
+                        @if(in_array($kategori->id, $selected_kategoris)) checked @endif>
+                    <label class="form-check-label" for="kategori{{$kategori->id}}">
+                        {{$kategori->nama}} ({{$kategori->kode}})
+                    </label>
+                </div>
+                @endforeach
+            @else
+                <em class="text-muted">Belum ada kategori. <a href="{{url('kategori/form/new')}}">Tambah kategori</a></em>
+            @endif
+        </div>
+        <small class="form-text text-muted">Pilih satu atau lebih kategori</small>
     </div>
 
     <button class="btn btn-primary mt-3">Submit</button>
