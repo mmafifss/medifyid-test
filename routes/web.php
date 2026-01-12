@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,14 +32,6 @@ Route::get('/master-items/delete/{id}', [App\Http\Controllers\MasterItemsControl
 Route::get('/master-items/export-excel', [App\Http\Controllers\MasterItemsController::class, 'exportExcel']);
 
 Route::get('/master-items/update-random-data', [App\Http\Controllers\MasterItemsController::class, 'updateRandomData']);
-
-// Pasien Routes
-Route::get('/pasien', [App\Http\Controllers\PasienController::class, 'index']);
-Route::get('/pasien/search', [App\Http\Controllers\PasienController::class, 'search']);
-Route::get('/pasien/form/{method}/{id?}', [App\Http\Controllers\PasienController::class, 'formView']);
-Route::post('/pasien/form/{method}/{id?}', [App\Http\Controllers\PasienController::class, 'formSubmit']);
-Route::get('/pasien/view/{no_rm}', [App\Http\Controllers\PasienController::class, 'singleView']);
-Route::get('/pasien/delete/{id}', [App\Http\Controllers\PasienController::class, 'delete']);
 
 // Kategori Routes
 Route::get('/kategori', [App\Http\Controllers\KategoriController::class, 'index']);
